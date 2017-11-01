@@ -1,10 +1,14 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 /*
  * Created by grim on 21/10/2017.
  */
-public class Ventana extends JFrame{
+public class Ventana extends JFrame implements ActionListener {
+
+    private JLabel label;
 
 
     public Ventana(int width, int height){
@@ -13,43 +17,23 @@ public class Ventana extends JFrame{
         setResizable(false);
 
 
-        JButton button = new JButton("Button");
+        JButton button = new JButton("Iniciar");
         button.setBounds(20,20, 50, 20);
 
         JList list = new JList();
         list.setVisible(true);
-        JLabel label = new JLabel();
+        label = new JLabel("Timer");
         label.setVisible(true);
-
-
-
 
 
 
         JPanel panel = new JPanel();
 
-        Vector<Integer> vector = new Vector(4);
 
-        vector.add(2);
-        vector.add(3);
-
-
-        for (Integer valor: vector){
-
-            System.out.println(valor);
-
-
-        }
-
-        label.setText("La suma es: " + Operaciones.resta(vector.get(0), vector.get(1)));
-
-
-
-        list.setListData(vector);
+        button.addActionListener(this);
 
 
         panel.add(button);
-        panel.add(list);
         panel.add(label);
 
         this.add(panel);
@@ -57,5 +41,49 @@ public class Ventana extends JFrame{
 
 
 
+    }
+
+    private void showTimer(int numero){
+
+        Thread thread = new Thread(() -> {
+
+
+            label.setText("Inicio");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            for (int i = numero; i >= 0 ; i--){
+
+                label.setText("" + i);
+
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            label.setText("Finish");
+
+
+
+        });
+
+        thread.start();
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+
+        showTimer(10);
     }
 }
