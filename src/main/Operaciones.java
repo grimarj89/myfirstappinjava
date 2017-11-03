@@ -1,3 +1,5 @@
+package main;
+
 /*
  * Created by grim on 21/10/2017.
  */
